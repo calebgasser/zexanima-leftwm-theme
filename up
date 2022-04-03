@@ -1,0 +1,43 @@
+#!/bin/bash
+export SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+source ${SCRIPTPATH}/config.sh
+
+#down the last running theme
+if [ -f "/tmp/leftwm-theme-down" ]; then
+    /tmp/leftwm-theme-down
+    rm /tmp/leftwm-theme-down
+fi
+ln -f -s ${SCRIPTPATH}/down /tmp/leftwm-theme-down
+
+# Start conky
+if [ -x "$(command -v conky)" ]; then
+  conky -b -c ${SCRIPTPATH}/.config/conky/config.lua &
+fi
+
+#boot picom if it exists
+if [ -x "$(command -v picom)" ]; then
+  picom --experimental-backends --config=$SCRIPTPATH/.config/picom/picom.conf &> /dev/null & 
+fi
+
+if [ -x "$(command -v feh)" ]; then
+  # Use the following for a random background whenever you load the theme.
+  #feh --recursive --bg-scale --randomize ${SCRIPTPATH}/wallpapers/**/{*.jpg,*.png}
+  feh --bg-scale ${SCRIPTPATH}/wallpapers/ricefield.jpg
+fi
+
+#set the theme.toml config
+leftwm-command "LoadTheme $SCRIPTPATH/theme.toml"
+
+#make sure all fonts needed are installed
+if [ "${INSTALL_FONTS}" = true ]; then
+  echo "Installing fonts..."
+  ${SCRIPTPATH}/install_fonts.sh
+fi
+
+# Start dunst. 
+if [ -x "$(command -v dunst)" ]; then
+  dunst -conf ${SCRIPTPATH}/.config/dunst/dunstrc.ini &
+  sleep 1
+  notify-send -u low " Zexanima's theme loaded!"
+fi
+

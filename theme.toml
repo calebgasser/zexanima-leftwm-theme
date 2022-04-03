@@ -1,0 +1,13 @@
+border_width = 0
+margin = 20 
+default_border_color = "#575268"
+floating_border_color = "#FAE3B0"
+focused_border_color = "#C9CBFF"
+
+[[gutter]]
+side = "Top"
+value = 40
+#window_rules = [
+#  # windows whose window title is "Pentablet" will be spawned floating on tag 9
+#  {window_title = "conky", spawn_on_tag = 1, spawn_floating = true},
+#]

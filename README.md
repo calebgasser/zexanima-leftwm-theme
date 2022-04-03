@@ -17,7 +17,7 @@
 **Colorscheme**: Catppuccin
 
 **Font**: mononoki Nerd Font
-
+![Screenshot](zexanima-theme-screenshot.png)
 ## config.sh
 Some portions of theme I switched off by default since they perminatly add files or modify your system in a 
 potentially undesired way. Make sure you read the config.sh script and enable the things you want.
